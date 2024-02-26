@@ -1,4 +1,34 @@
+import PieChart from "@/components/pie-chart";
+import "../styles/globals.css";
+
 export default function Home() {
+    const data = [
+        {
+            "id": "drama",
+            "label": "Drama",
+            "value": 6.7
+        },
+        {
+            "id": "fantasy",
+            "label": "Fantasy",
+            "value": 7.8
+        },
+        {
+            "id": "action",
+            "label": "Action",
+            "value": 6.2
+        },
+        {
+            "id": "adventure",
+            "label": "Adventure",
+            "value": 7.1
+        },
+        {
+            "id": "sci-fi",
+            "label": "Sci-Fi",
+            "value": 8.5
+        }
+    ];
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div
@@ -75,8 +105,24 @@ export default function Home() {
               <a href="#" className="hover:text-gray-700 dark:hover:text-white ">Movies</a>
             </nav>
 
-            <div
-                className="flex flex-col justify-between mt-4 bg-black/10 bg-blend-multiply rounded-3xl h-80 overflow-hidden bg-cover bg-center px-7 pt-4 pb-6 text-white">
+            <div className="dashboard-container">
+                {/*<div style={{*/}
+                {/*    border: '1px solid #ccc',*/}
+                {/*    borderRadius: '10px',*/}
+                {/*    padding: '20px',*/}
+                {/*    margin: '20px',*/}
+                {/*    boxShadow: '0px 0px 10px #ccc',*/}
+                {/*    height: '400px'*/}
+                {/*}}>*/}
+                {/*    /!*<div style={{ height: '100%' }}>*!/*/}
+                {/*        <PieChart data={data}/>*/}
+                {/*    /!*</div>*!/*/}
+                {/*</div>*/}
+
+                    <div className="chart-container">
+                        <PieChart data={data}/>
+                </div>
+
               {/*<div className="flex -space-x-1 items-center ">*/}
               {/*  <img className="rounded-full w-7 h-7 shadow-lg border border-white"*/}
               {/*       src="https://api.lorem.space/image/face?w=32&amp;h=32&amp;hash=zsrj8csk" alt="" srcSet="">*/}
