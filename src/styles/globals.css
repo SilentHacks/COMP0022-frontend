@@ -37,12 +37,12 @@ body {
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center; /* Center chart containers if they don't fill the entire row */
-    padding: 20px 10px;
+    padding: 40px 10px;
 }
 
 .chart-container {
-    width: 600px; /* Define a fixed width */
-    height: 350px; /* Ensure height is the same as width to maintain square shape */
+    width: 400px;
+    height: 400px;
     padding: 10px;
     background-color: #2c2c2e; /* Adjusted for dark mode */
     border: 2px solid #444; /* Slightly darker border for depth */
@@ -51,5 +51,5 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: auto; /* Center in flex item if there's extra space */
+    margin: auto 20px;
 }

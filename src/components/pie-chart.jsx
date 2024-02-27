@@ -4,7 +4,7 @@ import { ResponsivePie } from '@nivo/pie';
 const PieChart = ({ data }) => (
     <ResponsivePie
         data={data}
-        margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+        margin={{ top: 20, right: 80, bottom: 80, left: 80 }}
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
@@ -68,7 +68,7 @@ const Title = ({ width }) => {
                 style={{
                     fontSize: '20px',
                     fontWeight: 'bold',
-                    fill: '#FFF',
+                    fill: '#eee',
                 }}
             >
                 Genre Ratings
