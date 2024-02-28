@@ -65,7 +65,8 @@ export default function TitleLayout({children}) {
                     <section>
                         <SearchBar/>
                         <nav className="flex space-x-6 text-gray-400 font-medium mb-5">
-                            <a href="#" className="text-gray-700 dark:text-white font-semibold">Movie</a>
+                            <Link href="/" className="hover:text-gray-700 dark:hover:text-white ">Dashboard</Link>
+                            <a href="#" className="text-gray-700 dark:text-white font-semibold">Movies</a>
                         </nav>
                         {children}
                     </section>

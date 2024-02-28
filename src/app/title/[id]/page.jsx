@@ -1,6 +1,7 @@
-import {Avatar, Card, CardContent, Chip, Grid, Rating, Typography} from '@mui/material';
+import {Avatar, Card, CardContent, Chip, Grid, Typography} from '@mui/material';
 import Slideshow from "@/components/slideshow";
 import ViewersReactionAnalysis from "@/components/user-analysis";
+import MovieRating from "@/components/rating";
 
 export async function generateStaticParams() {
     return [
@@ -60,7 +61,7 @@ export default async function MoviePage({params}) {
                         ))}
                     </div>
                     <div className="flex items-center">
-                        <Rating name="read-only" value={movie.vote_average / 2} readOnly/>
+                        <MovieRating value={movie.vote_average} />
                         <Typography variant="body2" color="white" sx={{ml: 1}}>
                             {movie.vote_average.toFixed(1)}
                         </Typography>

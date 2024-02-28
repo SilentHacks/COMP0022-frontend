@@ -121,7 +121,7 @@ export default function Home() {
                         <SearchBar/>
                         <nav className="flex space-x-6 text-gray-400 font-medium">
                             <a href="#" className="text-gray-700 dark:text-white font-semibold">Dashboard</a>
-                            {/*<a href="#" className="hover:text-gray-700 dark:hover:text-white ">Movies</a>*/}
+                            <a href="#" className="hover:text-gray-700 dark:hover:text-white ">Movies</a>
                         </nav>
 
                         <div className="dashboard-container">
