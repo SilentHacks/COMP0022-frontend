@@ -1,5 +1,6 @@
 import {Avatar, Card, CardContent, Chip, Grid, Rating, Typography} from '@mui/material';
 import Slideshow from "@/components/slideshow";
+import ViewersReactionAnalysis from "@/components/user-analysis";
 
 export async function generateStaticParams() {
     return [
@@ -24,6 +25,11 @@ async function getData(id) {
         return {notFound: true};
     }
 }
+
+const mockAnalysisData = {
+    ratingAnalysis: "Users who generally give low ratings to movies have rated this movie higher than their average.",
+    genreAnalysis: "Fans of Sci-Fi and Action genres have shown a particular interest in this movie."
+};
 
 export default async function MoviePage({params}) {
     const movie = await getData(params.id);
@@ -82,6 +88,7 @@ export default async function MoviePage({params}) {
                     </Grid>
                 </CardContent>
             </Card>
+            <ViewersReactionAnalysis data={mockAnalysisData} />
         </div>
     );
 }
