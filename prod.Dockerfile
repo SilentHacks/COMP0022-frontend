@@ -7,18 +7,15 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci
 
+COPY .env.local .
+
 # Copy the relevant files to the work directory
 COPY src ./src
 COPY public ./public
 COPY next.config.mjs .
+COPY jsconfig.json .
 COPY tailwind.config.js .
 COPY postcss.config.js .
-
-# Optional: If your build-time environment variables are required, make sure they are passed at build time
-ARG ENV_VARIABLE
-ENV ENV_VARIABLE=${ENV_VARIABLE}
-ARG NEXT_PUBLIC_ENV_VARIABLE
-ENV NEXT_PUBLIC_ENV_VARIABLE=${NEXT_PUBLIC_ENV_VARIABLE}
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
