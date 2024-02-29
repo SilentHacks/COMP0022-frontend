@@ -8,17 +8,17 @@ export default function Slideshow({movie}) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
     const handleNextImage = () => {
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % movie.images.backdrops.length);
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1));
     };
 
     const handlePrevImage = () => {
-        setCurrentImageIndex((prevIndex) => (prevIndex - 1 + movie.images.backdrops.length) % movie.images.backdrops.length);
+        setCurrentImageIndex((prevIndex) => (prevIndex - 1));
     };
     return (
         <div className="relative">
             <CardMedia
                 component="img"
-                image={`https://image.tmdb.org/t/p/original${movie.images.backdrops[currentImageIndex].file_path}`}
+                image={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
                 alt={`Image ${currentImageIndex + 1}`}
                 sx={{width: '100%'}}
             />
