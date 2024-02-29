@@ -4,23 +4,16 @@ import ViewersReactionAnalysis from "@/components/user-analysis";
 import MovieRating from "@/components/rating";
 
 export async function generateStaticParams() {
-    return [
-        {id: 'tt0111161'},
-        {id: 'tt0068646'},
-        {id: 'tt0071562'}
-    ];
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies`);
+    const movies = await res.json();
+    return movies.map((movie) => ({id: movie.id.toString()}));
 }
 
 async function getData(id) {
-    const apiKey = process.env.TMDB_API_KEY;
-    const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&append_to_response=images,ratings,genres,credits`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/movies/${id}`
     try {
         const res = await fetch(url);
-        const data = await res.json();
-        // Extract director and stars from credits
-        const director = data.credits.crew.find((member) => member.job === 'Director');
-        const stars = data.credits.cast.slice(0, 3).map((actor) => actor.name).join(', ');
-        return {...data, director: director ? director.name : '', stars};
+        return await res.json();
     } catch (error) {
         console.error(error);
         return {notFound: true};
@@ -34,12 +27,14 @@ const mockAnalysisData = {
 
 export default async function MoviePage({params}) {
     const movie = await getData(params.id);
+    movie.vote_average = 3.5;
+    movie.vote_count = 100;
     const hasReviews = true;
 
     return (
         <div>
             <Card sx={{maxWidth: '100%', backgroundColor: '#2D2D2D'}}>
-                {movie.images.backdrops.length > 0 && (<Slideshow movie={movie}/>)}
+                {movie.backdrop_path && (<Slideshow movie={movie}/>)}
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div" color="white">
                         {movie.title}
@@ -51,14 +46,14 @@ export default async function MoviePage({params}) {
                         {movie.overview}
                     </Typography>
                     <Typography variant="body2" color="gray">
-                        Director: {movie.director}
+                        Director: {movie.directors.map((director) => director.name).join(', ')}
                     </Typography>
                     <Typography variant="body2" color="gray" sx={{mb: 2}}>
-                        Stars: {movie.stars}
+                        Stars: {movie.actors.slice(0, 3).map((actor) => actor.name).join(', ')}
                     </Typography>
                     <div className="flex flex-wrap gap-2 my-2">
                         {movie.genres.map((genre) => (
-                            <Chip label={genre.name} key={genre.id} color="primary"/>
+                            <Chip label={genre} key={genre} color="primary"/>
                         ))}
                     </div>
                     <div className="flex items-center mt-5">
@@ -72,7 +67,7 @@ export default async function MoviePage({params}) {
                         Top Cast
                     </Typography>
                     <Grid container spacing={2}>
-                        {movie.credits.cast.slice(0, 5).map((actor) => (
+                        {movie.actors.slice(0, 5).map((actor) => (
                             <Grid item xs={4} sm={2} key={actor.id}>
                                 <Avatar
                                     alt={actor.name}
@@ -83,7 +78,7 @@ export default async function MoviePage({params}) {
                                     {actor.name}
                                 </Typography>
                                 <Typography variant="caption" color="gray">
-                                    as {actor.character}
+                                    as {actor.character_name}
                                 </Typography>
                             </Grid>
                         ))}
