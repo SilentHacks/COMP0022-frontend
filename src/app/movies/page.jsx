@@ -7,8 +7,6 @@ import FilterComponent from "@/components/filter-component";
 
 export default async function MoviePage({searchParams}) {
     const currentPage = Number(searchParams?.page) || 1;
-    // const totalPages = await fetchInvoicesPages(query);
-    const totalPages = 10;
     const perPage = 12;
 
     const genres = searchParams?.genres?.split(',').map((i) => i.trim().toLowerCase());
@@ -25,9 +23,12 @@ export default async function MoviePage({searchParams}) {
         newSearchParams.append('release_year', releaseYear.join(','));
     }
 
-    const movies = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies?` + newSearchParams).then(
+    const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies?` + newSearchParams).then(
         res => res.json()
     );
+    const movies = data.movies;
+    const totalMovies = data.total_movies;
+    const totalPages = Math.ceil(totalMovies / perPage);
 
     const include = searchParams?.include?.split(',').map((i) => i.trim().toLowerCase());
 
@@ -60,8 +61,9 @@ export default async function MoviePage({searchParams}) {
 
                     <div className="mt-12 flex flex-col gap-y-4 text-gray-500 fill-gray-500 text-sm">
                         <div className="text-gray-400/70  font-medium uppercase">Menu</div>
-                        <Link className="flex items-center space-x-2 py-1 dark:text-white  font-semibold  border-r-4 border-r-red-600 pr-20 "
-                              href="/">
+                        <Link
+                            className="flex items-center space-x-2 py-1 dark:text-white  font-semibold  border-r-4 border-r-red-600 pr-20 "
+                            href="/">
                             <svg className="h-5 w-5 fill-red-600 " xmlns="http://www.w3.org/2000/svg"
                                  viewBox="0 0 24 24">
                                 <path
@@ -120,13 +122,15 @@ export default async function MoviePage({searchParams}) {
                             <Grid container spacing={2}>
                                 {movies?.map((movie, index) => (
                                     <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                                        <MovieCard movie={movie} settings={settings} />
+                                        <MovieCard movie={movie} settings={settings}/>
                                     </Grid>
                                 ))}
                             </Grid>
-                            <Box sx={{display: 'flex', justifyContent: 'center', mt: 3}}>
-                                <Pagination totalPages={totalPages}/>
-                            </Box>
+                            {   totalPages && totalPages > 1 &&
+                                <Box sx={{display: 'flex', justifyContent: 'center', mt: 3}}>
+                                    <Pagination totalPages={totalPages}/>
+                                </Box>
+                            }
                         </Box>
                     </section>
                 </main>

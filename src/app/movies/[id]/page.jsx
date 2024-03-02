@@ -5,7 +5,8 @@ import MovieRating from "@/components/rating";
 
 export async function generateStaticParams() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies`);
-    const movies = await res.json();
+    const data = await res.json();
+    const movies = data.movies;
     return movies.map((movie) => ({id: movie.id.toString()}));
 }
 
