@@ -1,7 +1,7 @@
-import { Card, CardMedia, CardContent, Typography, Grid } from '@mui/material';
+import { Card, CardMedia, CardContent, Typography } from '@mui/material';
 import Link from 'next/link';
 
-export default function MovieCard ({ movie, showFullReleaseDate, showStarRating, showGenres, showTagline, showStars, showDirectors, showBudget, showRevenue }) {
+export default function MovieCard ({ movie, settings }) {
     return (
         <Card sx={{
             maxWidth: 345,
@@ -27,18 +27,18 @@ export default function MovieCard ({ movie, showFullReleaseDate, showStarRating,
                 <Typography variant="body2" color="text.secondary">
                     {new Date(movie.release_date).getFullYear()} | {movie.runtime} min
                 </Typography>
-                {showFullReleaseDate && (
+                {settings.Release_Date && (
                     <Typography variant="body2" color="text.secondary">
                         Full Release Date: {new Date(movie.release_date).toLocaleDateString()}
                     </Typography>
                 )}
-                {showStarRating && <Typography variant="body2" color="text.secondary">Star Rating: {movie.rating}</Typography>}
-                {showGenres && <Typography variant="body2" color="text.secondary">Genres: {movie.genres.join(', ')}</Typography>}
-                {showTagline && <Typography variant="body2" color="text.secondary">Tagline: {movie.tagline}</Typography>}
-                {showStars && <Typography variant="body2" color="text.secondary">Stars: {movie.actors.slice(0, 3).join(', ')}</Typography>}
-                {showDirectors && <Typography variant="body2" color="text.secondary">Director(s): {movie.directors.join(', ')}</Typography>}
-                {showBudget && <Typography variant="body2" color="text.secondary">Budget: ${movie.budget.toLocaleString()}</Typography>}
-                {showRevenue && <Typography variant="body2" color="text.secondary">Revenue: ${movie.revenue.toLocaleString()}</Typography>}
+                {settings.Star_Rating && <Typography variant="body2" color="text.secondary">Star Rating: {movie.rating}</Typography>}
+                {settings.Genres && <Typography variant="body2" color="text.secondary">Genres: {movie.genres.join(', ')}</Typography>}
+                {settings.Tagline && <Typography variant="body2" color="text.secondary">Tagline: {movie.tagline}</Typography>}
+                {settings.Stars && <Typography variant="body2" color="text.secondary">Stars: {movie.actors.slice(0, 3).join(', ')}</Typography>}
+                {settings.Directors && <Typography variant="body2" color="text.secondary">Director(s): {movie.directors.join(', ')}</Typography>}
+                {settings.Budget && <Typography variant="body2" color="text.secondary">Budget: ${movie.budget.toLocaleString()}</Typography>}
+                {settings.Revenue && <Typography variant="body2" color="text.secondary">Revenue: ${movie.revenue.toLocaleString()}</Typography>}
             </CardContent>
         </Card>
     );
