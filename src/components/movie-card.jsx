@@ -44,8 +44,8 @@ export default function MovieCard ({ movie, settings }) {
                 }
 
                 {settings.Tagline && <Typography variant="body2" color="text.secondary">Tagline: {movie.tagline}</Typography>}
-                {settings.Stars && <Typography variant="body2" color="text.secondary">Stars: {movie.actors.slice(0, 3).join(', ')}</Typography>}
-                {settings.Directors && <Typography variant="body2" color="text.secondary">Director(s): {movie.directors.join(', ')}</Typography>}
+                {settings.Stars && <Typography variant="body2" color="text.secondary">Stars: {movie.actors?.slice(0, 3).map((person) => person.name).join(', ')}</Typography>}
+                {settings.Directors && <Typography variant="body2" color="text.secondary">Director(s): {movie.directors?.map((person) => person.name).join(', ')}</Typography>}
                 {settings.Budget && <Typography variant="body2" color="text.secondary">Budget: ${movie.budget.toLocaleString()}</Typography>}
                 {settings.Revenue && <Typography variant="body2" color="text.secondary">Revenue: ${movie.revenue.toLocaleString()}</Typography>}
             </CardContent>
