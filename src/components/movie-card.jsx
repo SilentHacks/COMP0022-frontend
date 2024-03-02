@@ -1,4 +1,4 @@
-import { Card, CardMedia, CardContent, Typography } from '@mui/material';
+import {Card, CardMedia, CardContent, Typography, Chip} from '@mui/material';
 import Link from 'next/link';
 
 export default function MovieCard ({ movie, settings }) {
@@ -33,7 +33,16 @@ export default function MovieCard ({ movie, settings }) {
                     </Typography>
                 )}
                 {settings.Star_Rating && <Typography variant="body2" color="text.secondary">Star Rating: {movie.rating}</Typography>}
-                {settings.Genres && <Typography variant="body2" color="text.secondary">Genres: {movie.genres.join(', ')}</Typography>}
+
+                {/*{settings.Genres && <Typography variant="body2" color="text.secondary">Genres: {movie.genres.join(', ')}</Typography>}*/}
+                {   settings.Genres &&
+                    <div className="flex flex-wrap gap-2 my-2">
+                    {movie.genres.map((genre) => (
+                        <Chip label={genre} key={genre} color="primary" size="small"/>
+                    ))}
+                </div>
+                }
+
                 {settings.Tagline && <Typography variant="body2" color="text.secondary">Tagline: {movie.tagline}</Typography>}
                 {settings.Stars && <Typography variant="body2" color="text.secondary">Stars: {movie.actors.slice(0, 3).join(', ')}</Typography>}
                 {settings.Directors && <Typography variant="body2" color="text.secondary">Director(s): {movie.directors.join(', ')}</Typography>}
