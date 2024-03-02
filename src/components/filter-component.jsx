@@ -48,6 +48,8 @@ const FilterComponent = ({selectedFilters}) => {
         if (selectedGenres.length > 0) params.set('genres', selectedGenres.join(','));
         else params.delete('genres');
 
+        params.delete('page');
+
         router.replace(`${pathname}?${params.toString()}`, {scroll: false});
     };
 
