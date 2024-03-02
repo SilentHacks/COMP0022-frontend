@@ -4,12 +4,12 @@ import { useState } from 'react';
 import { Box, FormControl, FormGroup, FormControlLabel, Checkbox, Typography, Slider, Button, Select, MenuItem, OutlinedInput, Chip } from '@mui/material';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 
-const FilterComponent = ({selectedFilters}) => {
+const FilterComponent = ({selectedFilters, minYear, maxYear}) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    const [releaseYearRange, setReleaseYearRange] = useState([1990, 2013]);
+    const [releaseYearRange, setReleaseYearRange] = useState([minYear, maxYear]);
     const [selectedGenres, setSelectedGenres] = useState([]);
 
     const genres = ['Action', 'Drama', 'Comedy', 'Sci-Fi']; // Example genres
@@ -41,7 +41,7 @@ const FilterComponent = ({selectedFilters}) => {
 
     const applyFilters = () => {
         const params = new URLSearchParams(searchParams);
-        if (releaseYearRange[0] !== 1990 || releaseYearRange[1] !== 2013)
+        if (releaseYearRange[0] !== minYear || releaseYearRange[1] !== maxYear)
             params.set('release_year', releaseYearRange.join(','));
         else params.delete('release_year');
 
@@ -71,7 +71,6 @@ const FilterComponent = ({selectedFilters}) => {
                 </FormControl>
             </Box>
 
-            {/* Filter Section */}
             <Box>
                 <Typography variant="h6">Filter:</Typography>
                 <FormControl fullWidth>
@@ -81,8 +80,8 @@ const FilterComponent = ({selectedFilters}) => {
                         value={releaseYearRange}
                         onChange={(_, newValue) => setReleaseYearRange(newValue)}
                         valueLabelDisplay="auto"
-                        min={1990}
-                        max={2013}
+                        min={minYear}
+                        max={maxYear}
                     />
 
                     {/* Genres */}

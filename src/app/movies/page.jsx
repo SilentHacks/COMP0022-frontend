@@ -28,6 +28,8 @@ export default async function MoviePage({searchParams}) {
     );
     const movies = data.movies;
     const totalMovies = data.total_movies;
+    const minYear = data.min_year;
+    const maxYear = data.max_year;
     const totalPages = Math.ceil(totalMovies / perPage);
 
     const include = searchParams?.include?.split(',').map((i) => i.trim().toLowerCase());
@@ -71,7 +73,7 @@ export default async function MoviePage({searchParams}) {
                             </svg>
                             <span>Home</span>
                         </Link>
-                        <FilterComponent selectedFilters={settings}/>
+                        <FilterComponent selectedFilters={settings} minYear={minYear} maxYear={maxYear}/>
                     </div>
 
                 </aside>
