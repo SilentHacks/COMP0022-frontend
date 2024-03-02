@@ -15,7 +15,7 @@ const FilterComponent = ({selectedFilters}) => {
     const genres = ['Action', 'Drama', 'Comedy', 'Sci-Fi']; // Example genres
 
     const handleFilterChange = (event) => {
-        const term = event.target.name;
+        const term = event.target.name.toLowerCase();
         const params = new URLSearchParams(searchParams);
         if (term) {
             const include = params.get('include')?.split(',') || [];
@@ -40,13 +40,15 @@ const FilterComponent = ({selectedFilters}) => {
     };
 
     const applyFilters = () => {
-        const queryParams = new URLSearchParams({
-            ...selectedFilters,
-            releaseYearStart: releaseYearRange[0],
-            releaseYearEnd: releaseYearRange[1],
-            genres: selectedGenres.join(','),
-        });
-        router.push(`/movies?${queryParams}`);
+        const params = new URLSearchParams(searchParams);
+        if (releaseYearRange[0] !== 1990 || releaseYearRange[1] !== 2013)
+            params.set('release_year', releaseYearRange.join(','));
+        else params.delete('release_year');
+
+        if (selectedGenres.length > 0) params.set('genres', selectedGenres.join(','));
+        else params.delete('genres');
+
+        router.replace(`${pathname}?${params.toString()}`, {scroll: false});
     };
 
     return (

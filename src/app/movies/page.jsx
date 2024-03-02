@@ -11,10 +11,23 @@ export default async function MoviePage({searchParams}) {
     const totalPages = 10;
     const perPage = 12;
 
-    const movies = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies?` + new URLSearchParams({
+    const genres = searchParams?.genres?.split(',').map((i) => i.trim().toLowerCase());
+    const releaseYear = searchParams?.release_year?.split(',').map((i) => Number(i));
+
+    const newSearchParams = new URLSearchParams({
         limit: perPage,
-        offset: (currentPage - 1) * perPage,
-    })).then(res => res.json());
+        offset: (currentPage - 1) * perPage
+    })
+    if (genres) {
+        newSearchParams.append('genres', genres.join(','));
+    }
+    if (releaseYear) {
+        newSearchParams.append('release_year', releaseYear.join(','));
+    }
+
+    const movies = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies?` + newSearchParams).then(
+        res => res.json()
+    );
 
     const include = searchParams?.include?.split(',').map((i) => i.trim().toLowerCase());
 
@@ -105,7 +118,7 @@ export default async function MoviePage({searchParams}) {
                             mx: 'auto',
                         }}>
                             <Grid container spacing={2}>
-                                {movies.map((movie, index) => (
+                                {movies?.map((movie, index) => (
                                     <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
                                         <MovieCard movie={movie} settings={settings} />
                                     </Grid>
