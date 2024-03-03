@@ -14,6 +14,7 @@ export default async function MoviePage({searchParams}) {
     const rating = searchParams?.rating?.split(',').map((i) => Number(i));
     const sort = searchParams?.sort;
     const sortOrder = searchParams?.sort_order;
+    const query = searchParams?.query;
 
     const newSearchParams = new URLSearchParams({
         limit: perPage,
@@ -24,6 +25,7 @@ export default async function MoviePage({searchParams}) {
     if (rating) newSearchParams.append('rating', rating.join(','));
     if (sort) newSearchParams.append('sort', sort);
     if (sortOrder) newSearchParams.append('sort_order', sortOrder);
+    if (query) newSearchParams.append('query', query);
 
     const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies?` + newSearchParams).then(
         res => res.json()

@@ -74,17 +74,6 @@ export default function Home() {
                             </svg>
                             <span>Home</span>
                         </Link>
-                        {/*<a className=" flex items-center space-x-2 py-1  group hover:border-r-4 hover:border-r-red-600 hover:font-semibold dark:hover:text-white"*/}
-                        {/*   href="#">*/}
-                        {/*  <svg className="h-5 w-5 group-hover:fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">*/}
-                        {/*    <g>*/}
-                        {/*      <path*/}
-                        {/*          d="M12 2C6.48 2 2 6.48 2 12c0 5.51 4.48 10 10 10 5.51 0 10-4.49 10-10 0-5.52-4.49-10-10-10Zm0 18c-4.42 0-8-3.59-8-8 0-4.42 3.58-8 8-8 4.41 0 8 3.58 8 8 0 4.41-3.59 8-8 8Z"></path>*/}
-                        {/*      <path d="M8 16l5.991-2 2-6 -6 2Z"></path>*/}
-                        {/*    </g>*/}
-                        {/*  </svg>*/}
-                        {/*  <span>Discovery</span>*/}
-                        {/*</a>*/}
                     </div>
 
                 </aside>
@@ -119,7 +108,6 @@ export default function Home() {
                     </header>
 
                     <section>
-                        <SearchBar/>
                         <nav className="flex space-x-6 text-gray-400 font-medium">
                             <Link href="/" className="text-gray-700 dark:text-white font-semibold">Dashboard</Link>
                             <Link href="movies" className="hover:text-gray-700 dark:hover:text-white ">Movies</Link>
