@@ -4,15 +4,13 @@ import { useState } from 'react';
 import { Box, FormControl, FormGroup, FormControlLabel, Checkbox, Typography, Slider, Button, Select, MenuItem, OutlinedInput, Chip } from '@mui/material';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 
-const FilterComponent = ({selectedFilters, minYear, maxYear}) => {
+const FilterComponent = ({selectedFilters, minYear, maxYear, genres}) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
     const [releaseYearRange, setReleaseYearRange] = useState([minYear, maxYear]);
     const [selectedGenres, setSelectedGenres] = useState([]);
-
-    const genres = ['Action', 'Drama', 'Comedy', 'Sci-Fi']; // Example genres
 
     const handleFilterChange = (event) => {
         const term = event.target.name.toLowerCase();

@@ -72,7 +72,7 @@ export default async function MoviePage({searchParams}) {
                             </svg>
                             <span>Home</span>
                         </Link>
-                        <FilterComponent selectedFilters={settings} minYear={minYear} maxYear={maxYear}/>
+                        <FilterComponent selectedFilters={settings} minYear={minYear} maxYear={maxYear} genres={data.genres}/>
                     </div>
                 </aside>
 
