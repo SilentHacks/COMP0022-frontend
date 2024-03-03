@@ -1,7 +1,20 @@
 'use client';
 
-import { useState } from 'react';
-import { Box, FormControl, FormGroup, FormControlLabel, Checkbox, Typography, Slider, Button, Select, MenuItem, OutlinedInput, Chip } from '@mui/material';
+import {useState} from 'react';
+import {
+    Box,
+    FormControl,
+    FormGroup,
+    FormControlLabel,
+    Checkbox,
+    Typography,
+    Slider,
+    Button,
+    Select,
+    MenuItem,
+    OutlinedInput,
+    Chip
+} from '@mui/material';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 
 const FilterComponent = ({selectedFilters, minYear, maxYear, genres}) => {
@@ -20,7 +33,10 @@ const FilterComponent = ({selectedFilters, minYear, maxYear, genres}) => {
             if (event.target.checked) {
                 include.push(term);
             } else {
-                include.splice(include.indexOf(term), 1);
+                const index = include.indexOf(term);
+                if (index > -1) {
+                    include.splice(index, 1);
+                }
             }
             params.set('include', include.join(','));
         }
@@ -30,7 +46,7 @@ const FilterComponent = ({selectedFilters, minYear, maxYear, genres}) => {
 
     const handleGenreChange = (event) => {
         const {
-            target: { value },
+            target: {value},
         } = event;
         setSelectedGenres(
             typeof value === 'string' ? value.split(',') : value,
@@ -48,11 +64,27 @@ const FilterComponent = ({selectedFilters, minYear, maxYear, genres}) => {
 
         params.delete('page');
 
+        router.replace(`${pathname}?${params.toString()}`,{scroll: false});
+    };
+
+    const clearGenres = () => {
+        setSelectedGenres([]);
+        const params = new URLSearchParams(searchParams);
+        params.delete('genres');
+        params.delete('page');
         router.replace(`${pathname}?${params.toString()}`, {scroll: false});
     };
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4, width: '90%', maxWidth: 720, bgcolor: 'background.paper', p: 2 }}>
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 4,
+            width: '90%',
+            maxWidth: 720,
+            bgcolor: 'background.paper',
+            p: 2
+        }}>
             {/* Show Section */}
             <Box>
                 <Typography variant="h6">Show:</Typography>
@@ -60,7 +92,8 @@ const FilterComponent = ({selectedFilters, minYear, maxYear, genres}) => {
                     <FormGroup>
                         {Object.keys(selectedFilters).map((filterName) => (
                             <FormControlLabel
-                                control={<Checkbox checked={selectedFilters[filterName]} onChange={handleFilterChange} name={filterName} />}
+                                control={<Checkbox checked={selectedFilters[filterName]} onChange={handleFilterChange}
+                                                   name={filterName}/>}
                                 label={filterName.replace(/_/g, ' ')}
                                 key={filterName}
                             />
@@ -69,6 +102,7 @@ const FilterComponent = ({selectedFilters, minYear, maxYear, genres}) => {
                 </FormControl>
             </Box>
 
+            {/* Filter Section */}
             <Box>
                 <Typography variant="h6">Filter:</Typography>
                 <FormControl fullWidth>
@@ -88,11 +122,11 @@ const FilterComponent = ({selectedFilters, minYear, maxYear, genres}) => {
                         multiple
                         value={selectedGenres}
                         onChange={handleGenreChange}
-                        input={<OutlinedInput id="select-multiple-chip" />}
+                        input={<OutlinedInput id="select-multiple-chip"/>}
                         renderValue={(selected) => (
-                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                            <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
                                 {selected.map((value) => (
-                                    <Chip key={value} label={value} />
+                                    <Chip key={value} label={value}/>
                                 ))}
                             </Box>
                         )}
@@ -103,8 +137,9 @@ const FilterComponent = ({selectedFilters, minYear, maxYear, genres}) => {
                             </MenuItem>
                         ))}
                     </Select>
+                    <Button onClick={clearGenres} variant="outlined" sx={{mt: 1}}>Clear Genres</Button>
                 </FormControl>
-                <Button onClick={applyFilters} variant="contained" sx={{ mt: 3 }}>Apply Filters</Button>
+                <Button onClick={applyFilters} variant="contained" sx={{mt: 3}}>Apply Filters</Button>
             </Box>
         </Box>
     );
