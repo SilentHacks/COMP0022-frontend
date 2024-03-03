@@ -11,6 +11,7 @@ export default async function MoviePage({searchParams}) {
 
     const genres = searchParams?.genres?.split(',').map((i) => i.trim());
     const releaseYear = searchParams?.release_year?.split(',').map((i) => Number(i));
+    const rating = searchParams?.rating?.split(',').map((i) => Number(i));
     const sort = searchParams?.sort;
     const sortOrder = searchParams?.sort_order;
 
@@ -20,6 +21,7 @@ export default async function MoviePage({searchParams}) {
     })
     if (genres) newSearchParams.append('genres', genres.join(','));
     if (releaseYear) newSearchParams.append('release_year', releaseYear.join(','));
+    if (rating) newSearchParams.append('rating', rating.join(','));
     if (sort) newSearchParams.append('sort', sort);
     if (sortOrder) newSearchParams.append('sort_order', sortOrder);
 

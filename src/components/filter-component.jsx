@@ -22,7 +22,11 @@ const FilterComponent = ({selectedFilters, minYear, maxYear, genres, initialGenr
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
+    const minStars = 0;
+    const maxStars = 5;
+
     const [releaseYearRange, setReleaseYearRange] = useState([minYear, maxYear]);
+    const [starRange, setStarRange] = useState([minStars, maxStars]);
     const [selectedGenres, setSelectedGenres] = useState(initialGenres ?? []);
     const [sort, setSort] = useState(initialSort ?? 'release_date');
     const [sortOrder, setSortOrder] = useState(initialSortOrder ?? 'desc');
@@ -74,6 +78,10 @@ const FilterComponent = ({selectedFilters, minYear, maxYear, genres, initialGenr
         if (releaseYearRange[0] !== minYear || releaseYearRange[1] !== maxYear)
             params.set('release_year', releaseYearRange.join(','));
         else params.delete('release_year');
+
+        if (starRange[0] !== minStars || starRange[1] !== maxStars)
+            params.set('rating', starRange.join(','));
+        else params.delete('rating');
 
         if (selectedGenres.length > 0) params.set('genres', selectedGenres.join(','));
         else params.delete('genres');
@@ -141,6 +149,15 @@ const FilterComponent = ({selectedFilters, minYear, maxYear, genres, initialGenr
                         valueLabelDisplay="auto"
                         min={minYear}
                         max={maxYear}
+                    />
+
+                    <Typography gutterBottom>Rating</Typography>
+                    <Slider
+                        value={starRange}
+                        onChange={(_, newValue) => setStarRange(newValue)}
+                        valueLabelDisplay="auto"
+                        min={minStars}
+                        max={maxStars}
                     />
 
                     {/* Genres */}
