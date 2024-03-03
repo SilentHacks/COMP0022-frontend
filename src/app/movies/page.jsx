@@ -51,7 +51,6 @@ export default async function MoviePage({searchParams}) {
                 className="flex min-h-screen 2xl:mx-auto 2xl:border-x-2 2xl:border-gray-200 dark:2xl:border-zinc-700 ">
                 <aside
                     className=" w-1/6 py-10 pl-10  min-w-min  border-r border-gray-300 dark:border-zinc-700  hidden md:block ">
-
                     <div className=" font-bold text-lg flex items-center gap-x-3">
                         <svg className="h-8 w-8 fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path
@@ -75,11 +74,9 @@ export default async function MoviePage({searchParams}) {
                         </Link>
                         <FilterComponent selectedFilters={settings} minYear={minYear} maxYear={maxYear}/>
                     </div>
-
                 </aside>
 
                 <main className=" flex-1 py-10  px-5 sm:px-10 ">
-
                     <header className="font-bold text-lg flex items-center  gap-x-3 md:hidden mb-12 ">
                         <span className="mr-6">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-gray-700 dark:text-white"
@@ -121,14 +118,18 @@ export default async function MoviePage({searchParams}) {
                             maxWidth: '100%',
                             mx: 'auto',
                         }}>
-                            <Grid container spacing={2}>
-                                {movies?.map((movie, index) => (
-                                    <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                                        <MovieCard movie={movie} settings={settings}/>
-                                    </Grid>
-                                ))}
-                            </Grid>
-                            {   totalPages && totalPages > 1 &&
+                            {   movies?.length > 0 ?
+                                <Grid container spacing={2}>
+                                    {movies.map((movie, index) => (
+                                        <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                                            <MovieCard movie={movie} settings={settings}/>
+                                        </Grid>
+                                    ))}
+                                </Grid>
+                                :
+                                <div>No results found</div>
+                            }
+                            {   movies?.length > 0 && totalPages > 1 &&
                                 <Box sx={{display: 'flex', justifyContent: 'center', mt: 3}}>
                                     <Pagination totalPages={totalPages}/>
                                 </Box>
