@@ -31,7 +31,8 @@ const FilterComponent = ({selectedFilters, minYear, maxYear, genres}) => {
         {value: 'title', label: 'Title'},
         {value: 'release_date', label: 'Release Date'},
         {value: 'average_rating', label: 'Rating'},
-        {value: 'runtime', label: 'Runtime'}
+        {value: 'runtime', label: 'Runtime'},
+        {value: 'num_reviews', label: 'Most Watched'},
     ];
 
     const sortOrderOptions = [
