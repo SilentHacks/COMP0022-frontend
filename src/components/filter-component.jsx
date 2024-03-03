@@ -24,6 +24,19 @@ const FilterComponent = ({selectedFilters, minYear, maxYear, genres}) => {
 
     const [releaseYearRange, setReleaseYearRange] = useState([minYear, maxYear]);
     const [selectedGenres, setSelectedGenres] = useState([]);
+    const [sort, setSort] = useState('release_date');
+    const [sortOrder, setSortOrder] = useState('desc');
+
+    const sortOptions = [
+        {value: 'title', label: 'Title'},
+        {value: 'release_date', label: 'Release Date'},
+        {value: 'rating', label: 'Rating'}
+    ];
+
+    const sortOrderOptions = [
+        {value: 'asc', label: 'Ascending'},
+        {value: 'desc', label: 'Descending'},
+    ];
 
     const handleFilterChange = (event) => {
         const term = event.target.name.toLowerCase();
@@ -64,6 +77,9 @@ const FilterComponent = ({selectedFilters, minYear, maxYear, genres}) => {
 
         params.delete('page');
 
+        params.set('sort', sort);
+        params.set('sort_order', sortOrder);
+
         router.replace(`${pathname}?${params.toString()}`,{scroll: false});
     };
 
@@ -73,6 +89,14 @@ const FilterComponent = ({selectedFilters, minYear, maxYear, genres}) => {
         params.delete('genres');
         params.delete('page');
         router.replace(`${pathname}?${params.toString()}`, {scroll: false});
+    };
+
+    const handleSortChange = (event) => {
+        setSort(event.target.value);
+    };
+
+    const handleSortOrderChange = (event) => {
+        setSortOrder(event.target.value);
     };
 
     return (
@@ -139,8 +163,28 @@ const FilterComponent = ({selectedFilters, minYear, maxYear, genres}) => {
                     </Select>
                     <Button onClick={clearGenres} variant="outlined" sx={{mt: 1}}>Clear Genres</Button>
                 </FormControl>
-                <Button onClick={applyFilters} variant="contained" sx={{mt: 3}}>Apply Filters</Button>
             </Box>
+
+            <Box>
+                <Typography variant="h6">Sort by:</Typography>
+                <FormControl fullWidth sx={{mb: 2}}>
+                    <Select value={sort} onChange={handleSortChange}>
+                        {sortOptions.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+                <Typography variant="h6">Sort order:</Typography>
+                <FormControl fullWidth>
+                    <Select value={sortOrder} onChange={handleSortOrderChange}>
+                        {sortOrderOptions.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            </Box>
+
+            <Button onClick={applyFilters} variant="contained" sx={{mt: 3}}>Apply Filters</Button>
         </Box>
     );
 };

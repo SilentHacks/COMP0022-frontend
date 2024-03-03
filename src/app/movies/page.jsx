@@ -11,17 +11,17 @@ export default async function MoviePage({searchParams}) {
 
     const genres = searchParams?.genres?.split(',').map((i) => i.trim().toLowerCase());
     const releaseYear = searchParams?.release_year?.split(',').map((i) => Number(i));
+    const sort = searchParams?.sort;
+    const sortOrder = searchParams?.sort_order;
 
     const newSearchParams = new URLSearchParams({
         limit: perPage,
         offset: (currentPage - 1) * perPage
     })
-    if (genres) {
-        newSearchParams.append('genres', genres.join(','));
-    }
-    if (releaseYear) {
-        newSearchParams.append('release_year', releaseYear.join(','));
-    }
+    if (genres) newSearchParams.append('genres', genres.join(','));
+    if (releaseYear) newSearchParams.append('release_year', releaseYear.join(','));
+    if (sort) newSearchParams.append('sort', sort);
+    if (sortOrder) newSearchParams.append('sort_order', sortOrder);
 
     const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies?` + newSearchParams).then(
         res => res.json()

@@ -4,10 +4,9 @@ import ViewersReactionAnalysis from "@/components/user-analysis";
 import MovieRating from "@/components/rating";
 
 export async function generateStaticParams() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/ids`);
     const data = await res.json();
-    const movies = data.movies;
-    return movies.map((movie) => ({id: movie.id.toString()}));
+    return data.map((id) => ({id: id.toString()}));
 }
 
 async function getData(id) {
