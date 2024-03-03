@@ -9,7 +9,7 @@ export default async function MoviePage({searchParams}) {
     const currentPage = Number(searchParams?.page) || 1;
     const perPage = 12;
 
-    const genres = searchParams?.genres?.split(',').map((i) => i.trim().toLowerCase());
+    const genres = searchParams?.genres?.split(',').map((i) => i.trim());
     const releaseYear = searchParams?.release_year?.split(',').map((i) => Number(i));
     const sort = searchParams?.sort;
     const sortOrder = searchParams?.sort_order;
@@ -72,7 +72,9 @@ export default async function MoviePage({searchParams}) {
                             </svg>
                             <span>Home</span>
                         </Link>
-                        <FilterComponent selectedFilters={settings} minYear={minYear} maxYear={maxYear} genres={data.genres}/>
+                        <FilterComponent
+                            selectedFilters={settings} minYear={minYear} maxYear={maxYear} genres={data.genres}
+                            initialGenres={genres} initialSort={sort} initialSortOrder={sortOrder}/>
                     </div>
                 </aside>
 
