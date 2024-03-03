@@ -14,7 +14,7 @@ export default function MovieRating({ value }) {
     return (
         <CustomRating
             name="read-only"
-            value={value}
+            value={value ?? 0}
             readOnly
             precision={0.5}
         />

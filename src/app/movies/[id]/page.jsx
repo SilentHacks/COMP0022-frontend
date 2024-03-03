@@ -27,9 +27,6 @@ const mockAnalysisData = {
 
 export default async function MoviePage({params}) {
     const movie = await getData(params.id);
-    movie.vote_average = 3.5;
-    movie.vote_count = 100;
-    const hasReviews = true;
 
     return (
         <div>
@@ -57,9 +54,9 @@ export default async function MoviePage({params}) {
                         ))}
                     </div>
                     <div className="flex items-center mt-5">
-                        <MovieRating value={movie.vote_average} />
+                        <MovieRating value={movie.average_rating} />
                         <Typography variant="body2" color="white" sx={{ml: 1}}>
-                            {movie.vote_average.toFixed(1)} {hasReviews ? `(${movie.vote_count} votes)` : '(predicted)'}
+                            {(movie.average_rating ?? 0).toFixed(1)} {`(${movie.num_reviews} votes)`}
                         </Typography>
                     </div>
 

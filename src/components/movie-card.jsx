@@ -1,5 +1,6 @@
 import {Card, CardMedia, CardContent, Typography, Chip} from '@mui/material';
 import Link from 'next/link';
+import MovieRating from "@/components/rating";
 
 export default function MovieCard ({ movie, settings }) {
     return (
@@ -29,10 +30,17 @@ export default function MovieCard ({ movie, settings }) {
                 </Typography>
                 {settings.Release_Date && (
                     <Typography variant="body2" color="text.secondary">
-                        Full Release Date: {new Date(movie.release_date).toLocaleDateString()}
+                        Release Date: {new Date(movie.release_date).toLocaleDateString()}
                     </Typography>
                 )}
-                {settings.Star_Rating && <Typography variant="body2" color="text.secondary">Star Rating: {movie.rating}</Typography>}
+                {settings.Rating &&
+                    <div className="flex items-center mt-3 mb-3">
+                        <MovieRating value={movie.average_rating} />
+                        <Typography variant="body2" color="white" sx={{ml: 1}}>
+                            {(movie.average_rating ?? 0).toFixed(1)}
+                        </Typography>
+                    </div>
+                }
 
                 {/*{settings.Genres && <Typography variant="body2" color="text.secondary">Genres: {movie.genres.join(', ')}</Typography>}*/}
                 {   settings.Genres &&

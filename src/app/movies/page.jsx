@@ -36,7 +36,7 @@ export default async function MoviePage({searchParams}) {
 
     const settings = {
         Release_Date: include?.includes('release_date') || false,
-        Star_Rating: include?.includes('star_rating') || false,
+        Rating: include?.includes('rating') || false,
         Genres: include?.includes('genres') || false,
         Tagline: include?.includes('tagline') || false,
         Stars: include?.includes('stars') || false,
