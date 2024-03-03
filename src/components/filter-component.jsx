@@ -17,15 +17,15 @@ import {
 } from '@mui/material';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 
-const FilterComponent = ({selectedFilters, minYear, maxYear, genres}) => {
+const FilterComponent = ({selectedFilters, minYear, maxYear, genres, initialGenres, initialSort, initialSortOrder}) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
     const [releaseYearRange, setReleaseYearRange] = useState([minYear, maxYear]);
-    const [selectedGenres, setSelectedGenres] = useState([]);
-    const [sort, setSort] = useState('release_date');
-    const [sortOrder, setSortOrder] = useState('desc');
+    const [selectedGenres, setSelectedGenres] = useState(initialGenres ?? []);
+    const [sort, setSort] = useState(initialSort ?? 'release_date');
+    const [sortOrder, setSortOrder] = useState(initialSortOrder ?? 'desc');
 
     const sortOptions = [
         {value: 'title', label: 'Title'},

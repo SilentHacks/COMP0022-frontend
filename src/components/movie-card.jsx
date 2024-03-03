@@ -35,9 +35,12 @@ export default function MovieCard ({ movie, settings }) {
                 )}
                 {settings.Rating &&
                     <div className="flex items-center mt-3 mb-3">
-                        <MovieRating value={movie.average_rating} />
+                        <MovieRating value={movie.average_rating} size="small"/>
                         <Typography variant="body2" color="white" sx={{ml: 1}}>
                             {(movie.average_rating ?? 0).toFixed(1)}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" sx={{ml: 1}}>
+                            ({movie.num_reviews})
                         </Typography>
                     </div>
                 }

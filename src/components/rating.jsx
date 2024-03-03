@@ -10,13 +10,14 @@ const CustomRating = styled(Rating)({
     }
 });
 
-export default function MovieRating({ value }) {
+export default function MovieRating({ value, size }) {
     return (
         <CustomRating
             name="read-only"
             value={value ?? 0}
             readOnly
             precision={0.5}
+            size={size}
         />
     );
 }
