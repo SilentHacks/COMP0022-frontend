@@ -4,17 +4,47 @@ import BipolarBarChart from "@/components/bipolar-bar-chart";
 import Link from "next/link";
 
 export default async function Home() {
-    const pieData = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/genres/popular`).then(
-        res => res.json().then(data => data.slice(0, 10).map(
-            ({genre, average_rating, count, popularity}) => ({id: genre, label: genre, value: +popularity.toFixed(1)})
-        ))
-    );
+const pieData = [
+        {
+            "id": "drama",
+            "label": "Drama",
+            "value": 6.7
+        },
+        {
+            "id": "fantasy",
+            "label": "Fantasy",
+            "value": 7.8
+        },
+        {
+            "id": "action",
+            "label": "Action",
+            "value": 6.2
+        },
+        {
+            "id": "adventure",
+            "label": "Adventure",
+            "value": 7.1
+        },
+        {
+            "id": "sci-fi",
+            "label": "Sci-Fi",
+            "value": 8.5
+        }
+    ];
 
-    const barData = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/genres/polarising`).then(
-        res => res.json().then(data => data.slice(0, 5).map(
-            ({genre, high_rating_pct, low_rating_pct}) => ({genre, lowRating: +low_rating_pct.toFixed(1), highRating: +high_rating_pct.toFixed(1)})
-        ))
-    );
+    const barData = [
+        {
+            "genre": "Action",
+            "lowRating": -30, // Note: negative value for low ratings
+            "highRating": 45
+        },
+        {
+            "genre": "Comedy",
+            "lowRating": -25,
+            "highRating": 50
+        },
+        // Add other genres as needed
+    ];
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
