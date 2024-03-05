@@ -27,7 +27,7 @@ const PieChart = ({ data }) => (
                     border: '1px solid #777',
                 }}
             >
-                <strong>{datum.id}</strong>: {datum.value} (Average Rating)
+                <strong>{datum.id}</strong>: {datum.value} ({datum.count} Ratings)
             </div>
         )}
         layers={['arcs', 'arcLabels', 'arcLinkLabels', 'legends', 'annotations', Title]}
