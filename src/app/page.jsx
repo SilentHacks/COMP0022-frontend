@@ -2,49 +2,24 @@ import PieChart from "@/components/pie-chart";
 import "@/styles/globals.css";
 import BipolarBarChart from "@/components/bipolar-bar-chart";
 import Link from "next/link";
+import {Typography} from "@mui/material";
 
 export default async function Home() {
-const pieData = [
-        {
-            "id": "drama",
-            "label": "Drama",
-            "value": 6.7
-        },
-        {
-            "id": "fantasy",
-            "label": "Fantasy",
-            "value": 7.8
-        },
-        {
-            "id": "action",
-            "label": "Action",
-            "value": 6.2
-        },
-        {
-            "id": "adventure",
-            "label": "Adventure",
-            "value": 7.1
-        },
-        {
-            "id": "sci-fi",
-            "label": "Sci-Fi",
-            "value": 8.5
-        }
-    ];
+    const pieData = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/genres/popular`).then(
+        res => res.json().then(data => data.slice(0, 5).map(
+            ({genre, average_rating, count, popularity}) => ({id: genre, label: genre, value: +popularity.toFixed(1)})
+        ))
+    );
 
-    const barData = [
-        {
-            "genre": "Action",
-            "lowRating": -30, // Note: negative value for low ratings
-            "highRating": 45
-        },
-        {
-            "genre": "Comedy",
-            "lowRating": -25,
-            "highRating": 50
-        },
-        // Add other genres as needed
-    ];
+    const barData = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/genres/polarising`).then(
+        res => res.json().then(data => data.slice(0, 5).map(
+            ({genre, high_rating_pct, low_rating_pct}) => ({
+                genre,
+                lowRating: +low_rating_pct.toFixed(1),
+                highRating: +high_rating_pct.toFixed(1)
+            })
+        ))
+    );
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -64,8 +39,9 @@ const pieData = [
 
                     <div className="mt-12 flex flex-col gap-y-4 text-gray-500 fill-gray-500 text-sm">
                         <div className="text-gray-400/70  font-medium uppercase">Menu</div>
-                        <Link className="flex items-center space-x-2 py-1 dark:text-white  font-semibold  border-r-4 border-r-red-600 pr-20 "
-                           href="/">
+                        <Link
+                            className="flex items-center space-x-2 py-1 dark:text-white  font-semibold  border-r-4 border-r-red-600 pr-20 "
+                            href="/">
                             <svg className="h-5 w-5 fill-red-600 " xmlns="http://www.w3.org/2000/svg"
                                  viewBox="0 0 24 24">
                                 <path
@@ -119,9 +95,29 @@ const pieData = [
                                 <div className="chart-container">
                                     <PieChart data={pieData}/>
                                 </div>
+                                <div>
+                                    <Typography variant="body" component="div" color="white" sx={{mt: 1, mb: 1}}>
+                                        Top 5 Genres by Popularity Score
+                                    </Typography>
+                                    <Typography sx={{mt: 1, mb: 5}}>
+                                        (Popularity score is calculated based on the number of reviews and average
+                                        rating)
+                                    </Typography>
+                                </div>
 
                                 <div className="chart-container">
                                     <BipolarBarChart data={barData} title="Top 5 Polarising Genres"/>
+                                </div>
+                                <div>
+                                    <Typography variant="body" component="div" color="white" sx={{mt: 1, mb: 1}}>
+                                        Top 5 Polarising Genres (highest difference between 4+ and 2- star ratings)
+                                        <Typography sx={{mt: 1, mb: 1}}>
+                                            • highRating represents % of 4+ star ratings
+                                        </Typography>
+                                        <Typography sx={{mt: 1, mb: 1}}>
+                                            • lowRating represents % of 2- star ratings
+                                        </Typography>
+                                    </Typography>
                                 </div>
 
                             </div>
@@ -130,5 +126,6 @@ const pieData = [
                 </main>
             </div>
         </main>
-    );
+    )
+        ;
 }
