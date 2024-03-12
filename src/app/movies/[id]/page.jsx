@@ -31,7 +31,9 @@ export default async function MoviePage({params}) {
     else
         ratingAnalysis = "Users have rated this movie <strong>similar to their average</strong>."
 
-    const data = {ratingAnalysis: ratingAnalysis}
+    const genreAnalysis = `People who liked this movie also like watching ${movie.correlated_genres.map((genre) => '<strong>' + genre + '</strong>').join(' and ')} movies.`
+
+    const data = {ratingAnalysis: ratingAnalysis, genreAnalysis: genreAnalysis};
 
     return (
         <div>

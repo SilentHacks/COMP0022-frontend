@@ -20,12 +20,11 @@ export default function ViewersReactionAnalysis ({ data }) {
                 <Typography variant="body1" color="white" dangerouslySetInnerHTML={{ __html: data.ratingAnalysis }}>
                 </Typography>
             </Box>
-            {/*<Box sx={{ display: 'flex', alignItems: 'center' }}>*/}
-            {/*    <MovieFilterIcon sx={{ color: 'secondary.main', mr: 1 }} />*/}
-            {/*    <Typography variant="body1" color="white">*/}
-            {/*        {data.genreAnalysis}*/}
-            {/*    </Typography>*/}
-            {/*</Box>*/}
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <MovieFilterIcon sx={{ color: 'secondary.main', mr: 1 }} />
+                <Typography variant="body1" color="white" dangerouslySetInnerHTML={{ __html: data.genreAnalysis }}>
+                </Typography>
+            </Box>
         </Box>
     );
 };
