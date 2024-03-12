@@ -59,6 +59,12 @@ export default async function MoviePage({params}) {
                             {(movie.average_rating ?? 0).toFixed(1)} {`(${movie.num_reviews} votes)`}
                         </Typography>
                     </div>
+                    <div className="flex items-center mt-5">
+                        <MovieRating value={movie.predicted_rating} />
+                        <Typography variant="body2" color="white" sx={{ml: 1}}>
+                            {(movie.predicted_rating ?? 0).toFixed(1)} (predicted)
+                        </Typography>
+                    </div>
 
                     <Typography gutterBottom variant="h6" component="div" color="white" sx={{ mt: 2 }}>
                         Top Cast
