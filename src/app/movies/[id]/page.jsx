@@ -20,13 +20,18 @@ async function getData(id) {
     }
 }
 
-const mockAnalysisData = {
-    ratingAnalysis: "Users who generally give low ratings to movies have rated this movie higher than their average.",
-    genreAnalysis: "Fans of Sci-Fi and Action genres have shown a particular interest in this movie."
-};
-
 export default async function MoviePage({params}) {
     const movie = await getData(params.id);
+
+    let ratingAnalysis = ""
+    if (movie.average_rating < movie.avg_user_rating)
+        ratingAnalysis = "Users who generally give <strong>low ratings</strong> to movies have rated this movie <strong>higher than their average</strong>."
+    else if (movie.average_rating > movie.avg_user_rating)
+        ratingAnalysis = "Users who generally give <strong>high ratings</strong> to movies have rated this movie <strong>lower than their average</strong>."
+    else
+        ratingAnalysis = "Users have rated this movie <strong>similar to their average</strong>."
+
+    const data = {ratingAnalysis: ratingAnalysis}
 
     return (
         <div>
@@ -88,7 +93,7 @@ export default async function MoviePage({params}) {
                     </Grid>
                 </CardContent>
             </Card>
-            <ViewersReactionAnalysis data={mockAnalysisData} />
+            <ViewersReactionAnalysis data={data} />
         </div>
     );
 }
