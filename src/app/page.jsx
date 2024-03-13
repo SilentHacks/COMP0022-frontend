@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import BipolarBarChart from "@/components/bipolar-bar-chart";
 import Link from "next/link";
 import {Typography} from "@mui/material";
+import HeatMap from "@/components/heat-map";
 
 export default async function Home() {
     const pieData = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/genres/popular`).then(
@@ -19,6 +20,10 @@ export default async function Home() {
                 highRating: +high_rating_pct.toFixed(1)
             })
         ))
+    );
+
+    const heatData = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies/genres/user_correlation`).then(
+        res => res.json().then()
     );
 
     return (
@@ -114,18 +119,18 @@ export default async function Home() {
                                         <Typography sx={{mt: 1, mb: 1}}>
                                             • highRating represents % of 4+ star ratings
                                         </Typography>
-                                        <Typography sx={{mt: 1, mb: 1}}>
+                                        <Typography sx={{mt: 1, mb: 5}}>
                                             • lowRating represents % of 2- star ratings
                                         </Typography>
                                     </Typography>
                                 </div>
 
+                                <HeatMap data={heatData}/>
                             </div>
                         </div>
                     </section>
                 </main>
             </div>
         </main>
-    )
-        ;
+    );
 }
