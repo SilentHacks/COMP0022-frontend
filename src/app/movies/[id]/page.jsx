@@ -23,13 +23,16 @@ async function getData(id) {
 export default async function MoviePage({params}) {
     const movie = await getData(params.id);
 
+    const userAvgRating = +movie.avg_user_rating.toFixed(1);
+    const movieAvgRating = +movie.average_rating.toFixed(1);
+
     let ratingAnalysis = ""
-    if (movie.average_rating < movie.avg_user_rating)
-        ratingAnalysis = "Users who generally give <strong>low ratings</strong> to movies have rated this movie <strong>higher than their average</strong>."
-    else if (movie.average_rating > movie.avg_user_rating)
-        ratingAnalysis = "Users who generally give <strong>high ratings</strong> to movies have rated this movie <strong>lower than their average</strong>."
+    if (movieAvgRating > userAvgRating)
+        ratingAnalysis = `Users generally give <strong>low ratings</strong> to movies of this genre (${userAvgRating}), but have rated this movie <strong>higher than their average</strong> (${movieAvgRating}).`
+    else if (movieAvgRating < userAvgRating)
+        ratingAnalysis = `Users generally give <strong>high ratings</strong> to movies of this genre (${userAvgRating}), but have rated this movie <strong>lower than their average</strong> (${movieAvgRating}).`
     else
-        ratingAnalysis = "Users have rated this movie <strong>similar to their average</strong>."
+        ratingAnalysis = "Users have rated this movie <strong>similar to their average</strong> for movies of this genre."
 
     const genreAnalysis = `People who liked this movie also like watching ${movie.correlated_genres.map((genre) => '<strong>' + genre + '</strong>').join(' and ')} movies.`
 
