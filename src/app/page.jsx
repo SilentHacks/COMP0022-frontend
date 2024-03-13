@@ -110,7 +110,7 @@ export default async function Home() {
                                 </div>
                                 <div>
                                     <Typography variant="body" component="div" color="white" sx={{mt: 1, mb: 1}}>
-                                        Top 5 Polarising Genres (highest difference between 4+ and 2- star ratings)
+                                        Top 5 Polarising Genres (most divide between 4+ and 2- star ratings)
                                         <Typography sx={{mt: 1, mb: 1}}>
                                             • highRating represents % of 4+ star ratings
                                         </Typography>
